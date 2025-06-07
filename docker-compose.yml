@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  hugo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hugo.entrypoints=http"
+      #- "traefik.http.routers.hugo.rule=Host(`blog.kupopi.com.br`)"
+      - "traefik.http.middlewares.hugo-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.hugo.middlewares=hugo-https-redirect"
+      - "traefik.http.routers.hugo-secure.entrypoints=https"
+      #- "traefik.http.routers.hugo-secure.rule=Host(`blog.kupopi.com.br`)"
+      - "traefik.http.routers.hugo-secure.tls=true"
+      - "traefik.http.routers.hugo-secure.service=hugo"
+      - "traefik.http.services.hugo.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
