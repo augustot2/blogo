@@ -1,5 +1,5 @@
 # Basic config
-baseURL = "https://example.com"
+baseURL = "https://blog.kupopi.com.br/"
 theme = "hugo-bearcub"
 copyright = "John Doe (CC BY 4.0)"
 defaultContentLanguage = "en"
